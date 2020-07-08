@@ -1,15 +1,16 @@
 ' C4-PlantUML, version 1.0.0
-' https://github.com/RicardoNiepel/C4-PlantUML
+' https://github.com/drogar/C4-PlantUML
 
 ' Colors
 ' ##################################
 
-!define ELEMENT_FONT_COLOR #FFFFFF
+
+!global $ELEMENT_FONT_COLOR="#FFFFFF"
 
 ' Styling
 ' ##################################
 
-!define TECHN_FONT_SIZE 12
+!global $TECHN_FONT_SIZE=12
 
 skinparam defaultTextAlignment center
 
@@ -40,67 +41,202 @@ skinparam rectangle<<boundary>> {
     BorderStyle dashed
 }
 
-' Layout
-' ##################################
-
-!definelong LAYOUT_AS_SKETCH
-skinparam backgroundColor #EEEBDC
-skinparam handwritten true
-skinparam defaultFontName "Comic Sans MS"
-center footer <font color=red>Warning:</font> Created for discussion, needs to be validated
-!enddefinelong
-
-!define LAYOUT_TOP_DOWN top to bottom direction
-!define LAYOUT_LEFT_RIGHT left to right direction
 
 ' Boundaries
 ' ##################################
 
-!define Boundary(e_alias, e_label) rectangle "==e_label" <<boundary>> as e_alias
-!define Boundary(e_alias, e_label, e_type) rectangle "==e_label\n<size:TECHN_FONT_SIZE>[e_type]</size>" <<boundary>> as e_alias
+!unquoted procedure Boundary(e_alias, e_label)
+rectangle "==e_label" <<boundary>> as e_alias
+!endprocedure
+
+!unquoted procedure Boundary(e_alias, e_label, e_type)
+rectangle "==e_label\n<size:$TECHN_FONT_SIZE>[e_type]</size>" <<boundary>> as e_alias
+!endprocedure
+
 
 ' Relationship
 ' ##################################
 
-!define Rel_(e_alias1, e_alias2, e_label, e_direction="") e_alias1 e_direction e_alias2 : "===e_label"
-!define Rel_(e_alias1, e_alias2, e_label, e_techn, e_direction="") e_alias1 e_direction e_alias2 : "===e_label\n//<size:TECHN_FONT_SIZE>[e_techn]</size>//"
+!unquoted procedure Rel_(e_alias1, e_alias2, e_label, e_direction="")
+e_alias1 e_direction e_alias2 : "===e_label"
+!endprocedure
 
-!define Rel(e_from,e_to, e_label) Rel_(e_from,e_to, e_label, "-->")
-!define Rel(e_from,e_to, e_label, e_techn) Rel_(e_from,e_to, e_label, e_techn, "-->")
+!unquoted procedure Rel_(e_alias1, e_alias2, e_label, e_techn, e_direction="")
+e_alias1 e_direction e_alias2 : "===e_label\n//<size:$TECHN_FONT_SIZE>[e_techn]</size>//"
+!endprocedure
 
-!define Rel_Back(e_to, e_from, e_label) Rel_(e_to, e_from, e_label, "<--")
-!define Rel_Back(e_to, e_from, e_label, e_techn) Rel_(e_to, e_from, e_label, e_techn, "<--")
 
-!define Rel_Neighbor(e_from,e_to, e_label) Rel_(e_from,e_to, e_label, "->")
-!define Rel_Neighbor(e_from,e_to, e_label, e_techn) Rel_(e_from,e_to, e_label, e_techn, "->")
+!unquoted procedure Rel(e_from,e_to, e_label)
+Rel_(e_from, e_to, e_label, "-->")
+!endprocedure
 
-!define Rel_Back_Neighbor(e_to, e_from, e_label) Rel_(e_to, e_from, e_label, "<-")
-!define Rel_Back_Neighbor(e_to, e_from, e_label, e_techn) Rel_(e_to, e_from, e_label, e_techn, "<-")
+!unquoted procedure Rel(e_from,e_to, e_label, e_techn)
+Rel_(e_from, e_to, e_label, e_techn, "-->")
+!endprocedure
 
-!define Rel_D(e_from,e_to, e_label) Rel_(e_from,e_to, e_label, "-DOWN->")
-!define Rel_D(e_from,e_to, e_label, e_techn) Rel_(e_from,e_to, e_label, e_techn, "-DOWN->")
-!define Rel_Down(e_from,e_to, e_label) Rel_D(e_from,e_to, e_label)
-!define Rel_Down(e_from,e_to, e_label, e_techn) Rel_D(e_from,e_to, e_label, e_techn)
 
-!define Rel_U(e_from,e_to, e_label) Rel_(e_from,e_to, e_label, "-UP->")
-!define Rel_U(e_from,e_to, e_label, e_techn) Rel_(e_from,e_to, e_label, e_techn, "-UP->")
-!define Rel_Up(e_from,e_to, e_label) Rel_U(e_from,e_to, e_label)
-!define Rel_Up(e_from,e_to, e_label, e_techn) Rel_U(e_from,e_to, e_label, e_techn)
+!unquoted procedure Rel_Back(e_to, e_from, e_label)
+Rel_(e_to, e_from, e_label, "<--")
+!endprocedure
 
-!define Rel_L(e_from,e_to, e_label) Rel_(e_from,e_to, e_label, "-LEFT->")
-!define Rel_L(e_from,e_to, e_label, e_techn) Rel_(e_from,e_to, e_label, e_techn, "-LEFT->")
-!define Rel_Left(e_from,e_to, e_label) Rel_L(e_from,e_to, e_label)
-!define Rel_Left(e_from,e_to, e_label, e_techn) Rel_L(e_from,e_to, e_label, e_techn)
+!unquoted procedure Rel_Back(e_to, e_from, e_label, e_techn)
+Rel_(e_to, e_from, e_label, e_techn, "<--")
+!endprocedure
 
-!define Rel_R(e_from,e_to, e_label) Rel_(e_from,e_to, e_label, "-RIGHT->")
-!define Rel_R(e_from,e_to, e_label, e_techn) Rel_(e_from,e_to, e_label, e_techn, "-RIGHT->")
-!define Rel_Right(e_from,e_to, e_label) Rel_R(e_from,e_to, e_label)
-!define Rel_Right(e_from,e_to, e_label, e_techn) Rel_R(e_from,e_to, e_label, e_techn)
+
+!unquoted procedure Rel_Neighbor(e_from,e_to, e_label)
+Rel_(e_from,e_to, e_label, "->")
+!endprocedure
+
+!unquoted procedure Rel_Neighbor(e_from,e_to, e_label, e_techn)
+Rel_(e_from,e_to, e_label, e_techn, "->")
+!endprocedure
+
+
+!unquoted procedure Rel_Back_Neighbor(e_to, e_from, e_label)
+Rel_(e_to, e_from, e_label, "<-")
+!endprocedure
+
+!unquoted procedure Rel_Back_Neighbor(e_to, e_from, e_label, e_techn)
+Rel_(e_to, e_from, e_label, e_techn, "<-")
+!endprocedure
+
+
+!unquoted procedure Rel_D(e_from,e_to, e_label)
+Rel_(e_from,e_to, e_label, "-DOWN->")
+!endprocedure
+
+!unquoted procedure Rel_D(e_from,e_to, e_label, e_techn)
+Rel_(e_from,e_to, e_label, e_techn, "-DOWN->")
+!endprocedure
+
+!unquoted procedure Rel_Down(e_from,e_to, e_label)
+Rel_D(e_from,e_to, e_label)
+!endprocedure
+
+!unquoted procedure Rel_Down(e_from,e_to, e_label, e_techn)
+Rel_D(e_from,e_to, e_label, e_techn)
+!endprocedure
+
+
+!unquoted procedure Rel_U(e_from,e_to, e_label)
+Rel_(e_from,e_to, e_label, "-UP->")
+!endprocedure
+
+!unquoted procedure Rel_U(e_from,e_to, e_label, e_techn)
+Rel_(e_from,e_to, e_label, e_techn, "-UP->")
+!endprocedure
+
+!unquoted procedure Rel_Up(e_from,e_to, e_label)
+Rel_U(e_from,e_to, e_label)
+!endprocedure
+
+!unquoted procedure Rel_Up(e_from,e_to, e_label, e_techn)
+Rel_U(e_from,e_to, e_label, e_techn)
+!endprocedure
+
+
+!unquoted procedure Rel_L(e_from,e_to, e_label)
+Rel_(e_from,e_to, e_label, "-LEFT->")
+!endprocedure
+
+!unquoted procedure Rel_L(e_from,e_to, e_label, e_techn)
+Rel_(e_from,e_to, e_label, e_techn, "-LEFT->")
+!endprocedure
+
+!unquoted procedure Rel_Left(e_from,e_to, e_label)
+Rel_L(e_from,e_to, e_label)
+!endprocedure
+
+!unquoted procedure Rel_Left(e_from,e_to, e_label, e_techn)
+Rel_L(e_from,e_to, e_label, e_techn)
+!endprocedure
+
+
+!unquoted procedure Rel_R(e_from,e_to, e_label)
+Rel_(e_from,e_to, e_label, "-RIGHT->")
+!endprocedure
+
+!unquoted procedure Rel_R(e_from,e_to, e_label, e_techn)
+Rel_(e_from,e_to, e_label, e_techn, "-RIGHT->")
+!endprocedure
+
+!unquoted procedure Rel_Right(e_from,e_to, e_label)
+Rel_R(e_from,e_to, e_label)
+!endprocedure
+
+!unquoted procedure Rel_Right(e_from,e_to, e_label, e_techn)
+Rel_R(e_from,e_to, e_label, e_techn)
+!endprocedure
+
 
 ' Layout Helpers
 ' ##################################
 
-!define Lay_D(e_from, e_to) e_from -[hidden]D- e_to
-!define Lay_U(e_from, e_to) e_from -[hidden]U- e_to
-!define Lay_R(e_from, e_to) e_from -[hidden]R- e_to
-!define Lay_L(e_from, e_to) e_from -[hidden]L- e_to
+!unquoted procedure Lay_D(e_from, e_to)
+e_from -[hidden]D- e_to
+!endprocedure
+
+!unquoted procedure Lay_U(e_from, e_to)
+e_from -[hidden]U- e_to
+!endprocedure
+
+!unquoted procedure Lay_R(e_from, e_to)
+e_from -[hidden]R- e_to
+!endprocedure
+
+!unquoted procedure Lay_L(e_from, e_to)
+e_from -[hidden]L- e_to
+!endprocedure
+
+
+' Layout
+' ##################################
+
+!global $person_used = "false"
+!global $ext_person_used = "false"
+!global $system_used = "false"
+!global $ext_system_used = "false"
+!global $container_used = "false"
+!global $component_used = "false"
+
+!procedure LAYOUT_WITH_LEGEND()
+hide stereotype
+legend right
+|=              |= Type |
+!if ($person_used == "true")
+|<$PERSON_BG_COLOR>      | person |
+!endif
+!if ($ext_person_used == "true")
+|<$EXTERNAL_PERSON_BG_COLOR>      | external person |
+!endif
+!if ($system_used == "true")
+|<$SYSTEM_BG_COLOR>   | system |
+!endif
+!if ($ext_system_used == "true")
+|<$EXTERNAL_SYSTEM_BG_COLOR>      | external system |
+!endif
+!if ($container_used == "true")
+|<$CONTAINER_BG_COLOR>   | container |
+!endif
+!if ($component_used == "true")
+|<$COMPONENT_BG_COLOR>   | component |
+!endif
+end legend
+!endprocedure
+
+
+!procedure LAYOUT_AS_SKETCH()
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+skinparam defaultFontName "Papyrus"
+center footer <font color=red>Warning:</font> Created for discussion, needs to be validated
+!endprocedure
+
+!unquoted procedure LAYOUT_TOP_DOWN()
+top to bottom direction
+!endprocedure
+
+!unquoted procedure LAYOUT_LEFT_RIGHT()
+left to right direction
+!endprocedure

@@ -1,11 +1,10 @@
 @startuml "techtribesjs"
-!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+!includeurl https://raw.githubusercontent.com/drogar/C4-PlantUML/master/C4_Container.puml
 ' uncomment the following line and comment the first to use locally
 ' !include C4_Container.puml
 
-LAYOUT_TOP_DOWN
+LAYOUT_TOP_DOWN()
 'LAYOUT_AS_SKETCH
-LAYOUT_WITH_LEGEND
 
 
 Person_Ext(anonymous_user, "Anonymous User")
@@ -13,7 +12,7 @@ Person(aggregated_user, "Aggregated User")
 Person(administration_user, "Administration User")
 
 System_Boundary(c1, "techtribes.js"){
-    
+
     Container(web_app, "Web Application", "Java, Spring MVC, Tomcat 7.x", "Allows users to view people, tribes, content, events, jobs, etc. from the local tech, digital and IT sector")
 
     ContainerDb(rel_db, "Relational Database", "MySQL 5.5.x", "Stores people, tribes, tribe membership, talks, events, jobs, badges, GitHub repos, etc.")
@@ -47,5 +46,7 @@ Rel(updater, github, "Gets information about public code repositories from", "HT
 Rel(updater, blogs, "Gets content using RSS and Atom feeds from", "HTTP")
 
 Lay_R(rel_db, filesystem)
+
+LAYOUT_WITH_LEGEND()
 
 @enduml

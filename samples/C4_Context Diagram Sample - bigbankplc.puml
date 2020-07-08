@@ -1,9 +1,8 @@
 @startuml
-!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Context.puml
+!includeurl https://raw.githubusercontent.com/drogar/C4-PlantUML/master/C4_Context.puml
 ' uncomment the following line and comment the first to use locally
 ' !include C4_Context.puml
 
-LAYOUT_WITH_LEGEND
 
 title System Context diagram for Internet Banking System
 
@@ -17,4 +16,7 @@ Rel(customer, banking_system, "Uses")
 Rel_Back(customer, mail_system, "Sends e-mails to")
 Rel_Neighbor(banking_system, mail_system, "Sends e-mails", "SMTP")
 Rel(banking_system, mainframe, "Uses")
+
+LAYOUT_WITH_LEGEND()
+
 @enduml

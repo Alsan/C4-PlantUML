@@ -1,11 +1,10 @@
 @startuml
-!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+!includeurl https://raw.githubusercontent.com/drogar/C4-PlantUML/master/C4_Container.puml
 ' uncomment the following line and comment the first to use locally
-' !include C4_Container.puml
+' !include ../C4_Container.puml
 
-LAYOUT_TOP_DOWN
-'LAYOUT_AS_SKETCH
-LAYOUT_WITH_LEGEND
+LAYOUT_TOP_DOWN()
+'LAYOUT_AS_SKETCH()
 
 title Container diagram for Internet Banking System
 
@@ -34,4 +33,6 @@ Rel_Back_Neighbor(database, backend_api, "Reads from and writes to", "sync, JDBC
 Rel_Back(customer, email_system, "Sends e-mails to")
 Rel_Back(email_system, backend_api, "Sends e-mails using", "sync, SMTP")
 Rel_Neighbor(backend_api, banking_system, "Uses", "sync/async, XML/HTTPS")
+
+LAYOUT_WITH_LEGEND()
 @enduml
